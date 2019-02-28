@@ -254,6 +254,16 @@ class TestMain < Test::Unit::TestCase
       assert_equal 'First Class Return', z.call
     end
   end
+
+  sub_test_case '合成関数' do
+    test '合成関数の例' do
+      f = lambda { |x| x + 3 }
+      g = lambda { |x| x + 8 }
+
+      h = lambda { |x| g.(f.(x)) }
+      assert_equal 13, h.(2)
+    end
+  end
 end
 
 def total_structured
