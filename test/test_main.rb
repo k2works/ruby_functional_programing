@@ -114,6 +114,18 @@ class TestMain < Test::Unit::TestCase
     result = plusthree.call(1)
     assert_equal 4, result
   end
+
+  test '引数の数の明確なチェック' do
+    assert_nothing_raised do
+      plusthree = Proc.new {|x| x + 3}
+      plusthree.call(1,2)
+    end
+
+    assert_raise do
+      plusthree = lambda {|x| x + 3}
+      plusthree.call(1,2)
+    end
+  end
 end
 
 def total_structured
