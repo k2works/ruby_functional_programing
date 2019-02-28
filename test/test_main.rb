@@ -8,7 +8,8 @@ class TestMain < Test::Unit::TestCase
   end
 
   test 'total_functional' do
-    assert_equal 13, total_functional
+    assert_equal 13, total_inject
+    assert_equal 13, total_reduce
   end
 
   test 'iterator_not_using' do
@@ -37,13 +38,13 @@ class TestMain < Test::Unit::TestCase
       assert_equal [1.1, 3.3], result
     end
 
-    test '新しい要素の配列を返す:map' do
-      result = ["apple", "orange", "pineapple", "strawberry"].map { |item| item.size }
+    test '新しい要素の配列を返す:collect' do
+      result = ["apple", "orange", "pineapple", "strawberry"].collect { |item| item.size }
       assert_equal [5, 6, 9, 10], result
     end
 
-    test '新しい要素の配列を返す:collect' do
-      result = ["apple", "orange", "pineapple", "strawberry"].collect { |item| item.size }
+    test '新しい要素の配列を返す:map' do
+      result = ["apple", "orange", "pineapple", "strawberry"].map { |item| item.size }
       assert_equal [5, 6, 9, 10], result
     end
 
@@ -309,8 +310,12 @@ def total_structured
   total
 end
 
-def total_functional
-  total = 0
+def total_inject
+  prices = [1, 5, 7]
+  prices.inject(0) { |total, n| total + n }
+end
+
+def total_reduce
   prices = [1, 5, 7]
   prices.reduce { |total, n| total + n }
 end
