@@ -46,6 +46,12 @@ class TestMain < Test::Unit::TestCase
       result = ["apple", "orange", "pineapple", "strawberry"].find { |item| item.size }
       assert_equal "apple", result
     end
+
+    test '指定した評価式で並び変えた配列を返す:sort' do
+      assert_equal ["1", "10", "13", "2", "3", "4"], ["2", "4", "13", "3", "1", "10"].sort
+      assert_equal ["1", "2", "3", "4", "10", "13"], ["2", "4", "13", "3", "1", "10"].sort { |a,b| a.to_i <=> b.to_i }
+      assert_equal ["13", "10", "4", "3", "2", "1"], ["2", "4", "13", "3", "1", "10"].sort { |b,a| a.to_i <=> b.to_i }
+    end
   end
 end
 
