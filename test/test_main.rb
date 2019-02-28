@@ -37,6 +37,11 @@ class TestMain < Test::Unit::TestCase
       assert_equal [1.1, 3.3], result
     end
 
+    test '新しい要素の配列を返す:map' do
+      result = ["apple", "orange", "pineapple", "strawberry"].map { |item| item.size }
+      assert_equal [5, 6, 9, 10], result
+    end
+
     test '新しい要素の配列を返す:collect' do
       result = ["apple", "orange", "pineapple", "strawberry"].collect { |item| item.size }
       assert_equal [5, 6, 9, 10], result
