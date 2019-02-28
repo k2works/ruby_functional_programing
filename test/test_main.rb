@@ -226,6 +226,16 @@ class TestMain < Test::Unit::TestCase
       assert_equal 'Block Example', block_example(&func)
     end
   end
+
+  sub_test_case 'ファーストクラスオブジェクト' do
+    test 'lambdaを使った代入の例' do
+      x = lambda { 'First Class Example' }
+      assert_equal 'First Class Example', x.call
+      
+      y = x
+      assert_equal 'First Class Example', y.call
+    end
+  end
 end
 
 def total_structured
