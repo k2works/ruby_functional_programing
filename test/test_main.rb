@@ -41,6 +41,11 @@ class TestMain < Test::Unit::TestCase
       result = ["apple", "orange", "pineapple", "strawberry"].collect { |item| item.size }
       assert_equal [5, 6, 9, 10], result
     end
+
+    test '配列の中から、条件に一致する要素を取得する:find' do
+      result = ["apple", "orange", "pineapple", "strawberry"].find { |item| item.size }
+      assert_equal "apple", result
+    end
   end
 end
 
