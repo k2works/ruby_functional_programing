@@ -215,6 +215,15 @@ class TestMain < Test::Unit::TestCase
         output = $stdout.string
         assert_equal "3\n" + "1\n", output
       end
+
+      test '&を使った処理' do
+        def block_example
+          yield
+        end
+
+        func = Proc.new {'Block Example'}
+        assert_equal 'Block Example', block_example(&func)
+      end
     end
   end
 end
