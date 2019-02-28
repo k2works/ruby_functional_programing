@@ -55,7 +55,12 @@ class TestMain < Test::Unit::TestCase
 
     test '配列の中から、条件に一致する要素を取得する:grep' do
       result = ["apple", "orange", "pineapple", "strawberry", "apricot"].grep( /^a/)
-      assert_equal ["apple"], result
+      assert_equal ["apple", "apricot"], result
+    end
+
+    test 'ブロック内の条件式が真である間までの要素を返す:take_while' do
+      result = [1,2,3,4,5,6,7,8,9].take_while { |item| item < 6 }
+      assert_equal [1,2,3,4,5], result
     end
   end
 end
