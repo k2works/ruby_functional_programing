@@ -107,6 +107,13 @@ class TestMain < Test::Unit::TestCase
     result = plusthree.call(1)
     assert_equal 4, result
   end
+
+  test 'lambdaで関数を作成' do
+    plusthree = lambda {|x| x + 3}
+
+    result = plusthree.call(1)
+    assert_equal 4, result
+  end
 end
 
 def total_structured
