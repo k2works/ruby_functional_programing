@@ -127,6 +127,16 @@ class TestMain < Test::Unit::TestCase
         plusthree.call(1,2)
       end
     end
+
+    test 'クロージャーの処理' do
+      def multi(i)
+        func = Proc.new {|x| x * 2}
+        func.call(i)
+      end
+
+      assert_equal 4, multi(2)
+      assert_equal 12, multi(6)
+    end
   end
 end
 
