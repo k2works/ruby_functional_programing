@@ -155,6 +155,33 @@ class TestMain < Test::Unit::TestCase
           multi(8)
         end
       end
+
+      test '手続きオブジェクトのブロック内から外部のローカル変数を参照' do
+        def count
+          number = 0
+          func = lambda {|i| number += i}
+          func
+        end
+
+        assert_equal 1, count.call(1)
+        assert_equal 2, count.call(2)
+        assert_equal 3, count.call(3)
+        assert_equal 4, count.call(4)
+      end
+
+      test '更新された値を保持' do
+        def count
+          number = 0
+          func = lambda {|i| number += i}
+          func
+        end
+
+        fun = count
+        assert_equal 1, fun.call(1)
+        assert_equal 3, fun.call(2)
+        assert_equal 6, fun.call(3)
+        assert_equal 10, fun.call(4)
+      end
     end
   end
 end
