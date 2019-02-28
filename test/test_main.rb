@@ -19,20 +19,20 @@ class TestMain < Test::Unit::TestCase
     assert_equal [2, 4, 6, 8], iterator_using_select
   end
 
-  sub_test_case '繰り返しの処理:each' do
-    test 'eachメソッドを使ったコード' do
+  sub_test_case 'イテレータ' do
+    test '繰り返しの処理:each' do
       $stdout = StringIO.new
       [1, 2, 3].each { |item| p item * item }
       output = $stdout.string
       assert_equal "1\n" + "4\n" + "9\n", output
     end
 
-    test 'selectメソッドを使ったコード' do
+    test '特定の条件を満たす要素だけを配列に入れて返す:select' do
       result = [1.1, 2, 3.3, 4].select { |item| item.integer? }
       assert_equal [2, 4], result
     end
 
-    test 'rejectメソッドを使ったコード' do
+    test '特定の条件を満たさない要素だけを配列に入れて返す:reject' do
       result = [1.1, 2, 3.3, 4].reject { |item| item.integer? }
       assert_equal [1.1, 3.3], result
     end
