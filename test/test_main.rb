@@ -91,6 +91,15 @@ class TestMain < Test::Unit::TestCase
     result = arg_one_twice {|x| x + 3}
     assert_equal 9, result
   end
+
+  test '関数を受け取れる関数の作成' do
+    def arg_one(&block)
+      block.call 1
+    end
+
+    result = arg_one {|x| x + 3}
+    assert_equal 4, result
+  end
 end
 
 def total_structured
