@@ -235,6 +235,15 @@ class TestMain < Test::Unit::TestCase
       y = x
       assert_equal 'First Class Example', y.call
     end
+
+    test 'lambdaを使った引数の例' do
+      x = lambda { 'First Class Example' }
+      def f(x)
+        x.call
+      end
+      
+      assert_equal 'First Class Example', f(x)
+    end
   end
 end
 
