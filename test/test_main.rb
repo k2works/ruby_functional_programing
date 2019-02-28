@@ -128,14 +128,33 @@ class TestMain < Test::Unit::TestCase
       end
     end
 
-    test 'クロージャーの処理' do
-      def multi(i)
-        func = Proc.new {|x| x * 2}
-        func.call(i)
+    sub_test_case 'クロージャー' do
+      test 'クロージャーの処理' do
+        def multi(i)
+          func = Proc.new {|x| x * 2}
+          func.call(i)
+        end
+  
+        assert_equal 4, multi(2)
+        assert_equal 12, multi(6)
       end
 
-      assert_equal 4, multi(2)
-      assert_equal 12, multi(6)
+      test 'Proc.newにブロックを直接指定' do
+        def multi(i)
+          func = Proc.new
+          func.call(i)
+        end
+
+        result = multi(2) {|x|x*6}
+        assert_equal 12, result
+
+        result = multi(6) {|x|x*8}
+        assert_equal 48, result
+
+        assert_raise do
+          multi(8)
+        end
+      end
     end
   end
 end
