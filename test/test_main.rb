@@ -10,6 +10,10 @@ class TestMain < Test::Unit::TestCase
   test 'total_functional' do
     assert_equal 13, total_functional
   end
+
+  test 'iterator_not_using' do
+    assert_equal [2, 4, 6, 8], iterator_not_using
+  end
 end
 
 def total_structured
@@ -27,4 +31,14 @@ def total_functional
   total = 0
   prices = [1, 5, 7]
   prices.reduce { |total, n| total + n }
+end
+
+def iterator_not_using
+  result = []
+  for i in [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    if i%2 == 0
+      result << i
+    end
+  end
+  result
 end
