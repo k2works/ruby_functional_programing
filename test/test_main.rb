@@ -278,11 +278,11 @@ class TestMain < Test::Unit::TestCase
     end
 
     test 'lambdaを使った戻り値の例2' do
-      x = ->(word) {
+      x = -> {
         return lambda { |word| "#{word} Class Return" }
       }
 
-      z = x.call('First')
+      z = x.call
       assert_equal 'First Class Return', z.call('First')
     end
   end
