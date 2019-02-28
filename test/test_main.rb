@@ -244,6 +244,15 @@ class TestMain < Test::Unit::TestCase
       
       assert_equal 'First Class Example', f(x)
     end
+
+    test 'lambdaを使った戻り値の例' do
+      x = lambda {
+        return lambda { 'First Class Return' }
+      }
+
+      z = x.call
+      assert_equal 'First Class Return', z.call
+    end
   end
 end
 
