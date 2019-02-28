@@ -18,6 +18,13 @@ class TestMain < Test::Unit::TestCase
   test 'iterator_using' do
     assert_equal [2, 4, 6, 8], iterator_using_select
   end
+
+  test '繰り返しの処理:each' do
+    $stdout = StringIO.new
+    [1, 2, 3].each { |item| p item * item }
+    output = $stdout.string
+    assert_equal "1\n" + "4\n" + "9\n", output
+  end
 end
 
 def total_structured
