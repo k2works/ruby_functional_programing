@@ -204,6 +204,17 @@ class TestMain < Test::Unit::TestCase
         output = $stdout.string
         assert_equal "3\n" + "3\n", output
       end
+
+      test 'ブロックのローカル変数としての宣言' do
+        x = 1
+        $stdout = StringIO.new
+        func = Proc.new {|y;x|x=y; p x}
+        func.call(3)
+        p x
+        
+        output = $stdout.string
+        assert_equal "3\n" + "1\n", output
+      end
     end
   end
 end
