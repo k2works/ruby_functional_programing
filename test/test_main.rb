@@ -74,56 +74,58 @@ class TestMain < Test::Unit::TestCase
     end
   end
 
-  test 'yield関数でオリジナルの関数を作成' do
-    def arg_one
-      yield 1
+  sub_test_case '関数を受ける関数の作成' do
+    test 'yield関数でオリジナルの関数を作成' do
+      def arg_one
+        yield 1
+      end
+  
+      result = arg_one {|x| x + 3}
+      assert_equal 4, result
     end
-
-    result = arg_one {|x| x + 3}
-    assert_equal 4, result
-  end
-
-  test 'yield関数でもう少し複雑な関数を定義' do
-    def arg_one_twice
-      yield(1) + yield(2)
+  
+    test 'yield関数でもう少し複雑な関数を定義' do
+      def arg_one_twice
+        yield(1) + yield(2)
+      end
+  
+      result = arg_one_twice {|x| x + 3}
+      assert_equal 9, result
     end
-
-    result = arg_one_twice {|x| x + 3}
-    assert_equal 9, result
-  end
-
-  test '関数を受け取れる関数の作成' do
-    def arg_one(&block)
-      block.call 1
+  
+    test '関数を受け取れる関数の作成' do
+      def arg_one(&block)
+        block.call 1
+      end
+  
+      result = arg_one {|x| x + 3}
+      assert_equal 4, result
     end
-
-    result = arg_one {|x| x + 3}
-    assert_equal 4, result
-  end
-
-  test '手続きオブジェクトとして関数を作成' do
-    plusthree = Proc.new {|x| x + 3}
-
-    result = plusthree.call(1)
-    assert_equal 4, result
-  end
-
-  test 'lambdaで関数を作成' do
-    plusthree = lambda {|x| x + 3}
-
-    result = plusthree.call(1)
-    assert_equal 4, result
-  end
-
-  test '引数の数の明確なチェック' do
-    assert_nothing_raised do
+  
+    test '手続きオブジェクトとして関数を作成' do
       plusthree = Proc.new {|x| x + 3}
-      plusthree.call(1,2)
+  
+      result = plusthree.call(1)
+      assert_equal 4, result
     end
-
-    assert_raise do
+  
+    test 'lambdaで関数を作成' do
       plusthree = lambda {|x| x + 3}
-      plusthree.call(1,2)
+  
+      result = plusthree.call(1)
+      assert_equal 4, result
+    end
+  
+    test '引数の数の明確なチェック' do
+      assert_nothing_raised do
+        plusthree = Proc.new {|x| x + 3}
+        plusthree.call(1,2)
+      end
+  
+      assert_raise do
+        plusthree = lambda {|x| x + 3}
+        plusthree.call(1,2)
+      end
     end
   end
 end
