@@ -82,6 +82,15 @@ class TestMain < Test::Unit::TestCase
     result = arg_one {|x| x + 3}
     assert_equal 4, result
   end
+
+  test 'yield関数でもう少し複雑な関数を定義' do
+    def arg_one_twice
+      yield(1) + yield(2)
+    end
+
+    result = arg_one_twice {|x| x + 3}
+    assert_equal 9, result
+  end
 end
 
 def total_structured
