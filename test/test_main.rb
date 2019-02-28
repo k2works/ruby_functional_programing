@@ -127,103 +127,103 @@ class TestMain < Test::Unit::TestCase
         plusthree.call(1,2)
       end
     end
+  end
 
-    sub_test_case 'クロージャー' do
-      test 'クロージャーの処理' do
-        def multi(i)
-          func = Proc.new {|x| x * 2}
-          func.call(i)
-        end
-  
-        assert_equal 4, multi(2)
-        assert_equal 12, multi(6)
+  sub_test_case 'クロージャー' do
+    test 'クロージャーの処理' do
+      def multi(i)
+        func = Proc.new {|x| x * 2}
+        func.call(i)
       end
 
-      test 'Proc.newにブロックを直接指定' do
-        def multi(i)
-          func = Proc.new
-          func.call(i)
-        end
+      assert_equal 4, multi(2)
+      assert_equal 12, multi(6)
+    end
 
-        result = multi(2) {|x|x*6}
-        assert_equal 12, result
-
-        result = multi(6) {|x|x*8}
-        assert_equal 48, result
-
-        assert_raise do
-          multi(8)
-        end
+    test 'Proc.newにブロックを直接指定' do
+      def multi(i)
+        func = Proc.new
+        func.call(i)
       end
 
-      test '手続きオブジェクトのブロック内から外部のローカル変数を参照' do
-        def count
-          number = 0
-          func = lambda {|i| number += i}
-          func
-        end
+      result = multi(2) {|x|x*6}
+      assert_equal 12, result
 
-        assert_equal 1, count.call(1)
-        assert_equal 2, count.call(2)
-        assert_equal 3, count.call(3)
-        assert_equal 4, count.call(4)
+      result = multi(6) {|x|x*8}
+      assert_equal 48, result
+
+      assert_raise do
+        multi(8)
+      end
+    end
+
+    test '手続きオブジェクトのブロック内から外部のローカル変数を参照' do
+      def count
+        number = 0
+        func = lambda {|i| number += i}
+        func
       end
 
-      test '更新された値を保持' do
-        def count
-          number = 0
-          func = lambda {|i| number += i}
-          func
-        end
+      assert_equal 1, count.call(1)
+      assert_equal 2, count.call(2)
+      assert_equal 3, count.call(3)
+      assert_equal 4, count.call(4)
+    end
 
-        fun = count
-        assert_equal 1, fun.call(1)
-        assert_equal 3, fun.call(2)
-        assert_equal 6, fun.call(3)
-        assert_equal 10, fun.call(4)
+    test '更新された値を保持' do
+      def count
+        number = 0
+        func = lambda {|i| number += i}
+        func
       end
 
-      test '変数を使用したときの振る舞いを比較1' do
-        x = 1
-        $stdout = StringIO.new
-        func = Proc.new {|x| p x}
-        func.call(3)
-        p x
-        
-        output = $stdout.string
-        assert_equal "3\n" + "1\n", output
+      fun = count
+      assert_equal 1, fun.call(1)
+      assert_equal 3, fun.call(2)
+      assert_equal 6, fun.call(3)
+      assert_equal 10, fun.call(4)
+    end
+
+    test '変数を使用したときの振る舞いを比較1' do
+      x = 1
+      $stdout = StringIO.new
+      func = Proc.new {|x| p x}
+      func.call(3)
+      p x
+      
+      output = $stdout.string
+      assert_equal "3\n" + "1\n", output
+    end
+
+    test '変数を使用したときの振る舞いを比較2' do
+      x = 1
+      $stdout = StringIO.new
+      func = Proc.new {|y|x=y; p x}
+      func.call(3)
+      p x
+      
+      output = $stdout.string
+      assert_equal "3\n" + "3\n", output
+    end
+
+    test 'ブロックのローカル変数としての宣言' do
+      x = 1
+      $stdout = StringIO.new
+      func = Proc.new {|y;x|x=y; p x}
+      func.call(3)
+      p x
+      
+      output = $stdout.string
+      assert_equal "3\n" + "1\n", output
+    end
+
+    test '&を使った処理' do
+      def block_example
+        yield
       end
 
-      test '変数を使用したときの振る舞いを比較2' do
-        x = 1
-        $stdout = StringIO.new
-        func = Proc.new {|y|x=y; p x}
-        func.call(3)
-        p x
-        
-        output = $stdout.string
-        assert_equal "3\n" + "3\n", output
-      end
-
-      test 'ブロックのローカル変数としての宣言' do
-        x = 1
-        $stdout = StringIO.new
-        func = Proc.new {|y;x|x=y; p x}
-        func.call(3)
-        p x
-        
-        output = $stdout.string
-        assert_equal "3\n" + "1\n", output
-      end
-
-      test '&を使った処理' do
-        def block_example
-          yield
-        end
-
-        func = Proc.new {'Block Example'}
-        assert_equal 'Block Example', block_example(&func)
-      end
+      func = Proc.new {'Block Example'}
+      assert_equal 'Block Example', block_example(&func)
     end
   end
 end
