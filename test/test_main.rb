@@ -3,11 +3,18 @@
 require 'test/unit'
 
 class TestMain < Test::Unit::TestCase
-  test 'Hello, world!' do
-    assert_equal 'Hello, world!', greeting
+  test 'total_structured' do
+    assert_equal 13, total_structured
   end
 end
 
-def greeting
-  'Hello, world!'
+def total_structured
+  total = 0
+  prices = [1, 5, 7]
+
+  for n in 0..prices.length-1 do
+    total = total + prices[n]
+  end
+
+  total
 end
