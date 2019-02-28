@@ -62,6 +62,11 @@ class TestMain < Test::Unit::TestCase
       result = [1,2,3,4,5,6,7,8,9].take_while { |item| item < 6 }
       assert_equal [1,2,3,4,5], result
     end
+
+    test 'ブロック内の条件式が真である以降の要素を返す:drop_while' do
+      result = [1,2,3,4,5,6,7,8,9,10].drop_while { |item| item < 6 }
+      assert_equal [6,7,8,9,10], result
+    end
   end
 end
 
