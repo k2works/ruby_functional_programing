@@ -100,6 +100,13 @@ class TestMain < Test::Unit::TestCase
     result = arg_one {|x| x + 3}
     assert_equal 4, result
   end
+
+  test '手続きオブジェクトとして関数を作成' do
+    plusthree = Proc.new {|x| x + 3}
+
+    result = plusthree.call(1)
+    assert_equal 4, result
+  end
 end
 
 def total_structured
