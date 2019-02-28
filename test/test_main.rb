@@ -73,6 +73,15 @@ class TestMain < Test::Unit::TestCase
       assert_equal [6,7,8,9,10], result
     end
   end
+
+  test 'yield関数でオリジナルの関数を作成' do
+    def arg_one
+      yield 1
+    end
+
+    result = arg_one {|x| x + 3}
+    assert_equal 4, result
+  end
 end
 
 def total_structured
