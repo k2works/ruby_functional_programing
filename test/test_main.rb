@@ -31,6 +31,11 @@ class TestMain < Test::Unit::TestCase
       result = [1.1, 2, 3.3, 4].select { |item| item.integer? }
       assert_equal [2, 4], result
     end
+
+    test 'rejectメソッドを使ったコード' do
+      result = [1.1, 2, 3.3, 4].reject { |item| item.integer? }
+      assert_equal [1.1, 3.3], result
+    end
   end
 end
 
