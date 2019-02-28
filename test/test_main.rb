@@ -6,6 +6,10 @@ class TestMain < Test::Unit::TestCase
   test 'total_structured' do
     assert_equal 13, total_structured
   end
+
+  test 'total_functional' do
+    assert_equal 13, total_functional
+  end
 end
 
 def total_structured
@@ -17,4 +21,10 @@ def total_structured
   end
 
   total
+end
+
+def total_functional
+  total = 0
+  prices = [1, 5, 7]
+  prices.reduce { |total, n| total + n }
 end
