@@ -52,6 +52,11 @@ class TestMain < Test::Unit::TestCase
       assert_equal ["1", "2", "3", "4", "10", "13"], ["2", "4", "13", "3", "1", "10"].sort { |a,b| a.to_i <=> b.to_i }
       assert_equal ["13", "10", "4", "3", "2", "1"], ["2", "4", "13", "3", "1", "10"].sort { |b,a| a.to_i <=> b.to_i }
     end
+
+    test '配列の中から、条件に一致する要素を取得する:grep' do
+      result = ["apple", "orange", "pineapple", "strawberry", "apricot"].grep( /^a/)
+      assert_equal ["apple"], result
+    end
   end
 end
 
