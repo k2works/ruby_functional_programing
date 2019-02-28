@@ -231,9 +231,12 @@ class TestMain < Test::Unit::TestCase
     test 'lambdaを使った代入の例' do
       x = lambda { 'First Class Example' }
       assert_equal 'First Class Example', x.call
+
+      x = lambda { |word| "#{word} Class Example" }
+      assert_equal 'First Class Example', x.call('First')
       
       y = x
-      assert_equal 'First Class Example', y.call
+      assert_equal 'First Class Example', y.call('First')
     end
 
     test 'lambdaを使った引数の例' do
@@ -252,6 +255,35 @@ class TestMain < Test::Unit::TestCase
 
       z = x.call
       assert_equal 'First Class Return', z.call
+    end
+
+    test 'lambdaを使った代入の例2' do
+      x = -> { 'First Class Example' }
+      assert_equal 'First Class Example', x.call
+
+      x = ->(word) { "#{word} Class Example" }
+      assert_equal 'First Class Example', x.call('First')
+
+      y = x
+      assert_equal 'First Class Example', y.call('First')
+    end
+
+    test 'lambdaを使った引数の例2' do
+      x = ->(word) { "#{word} Class Example" }
+      def f(x)
+        x.call('First')
+      end
+
+      assert_equal 'First Class Example', f(x)
+    end
+
+    test 'lambdaを使った戻り値の例2' do
+      x = ->(word) {
+        return lambda { |word| "#{word} Class Return" }
+      }
+
+      z = x.call('First')
+      assert_equal 'First Class Return', z.call('First')
     end
   end
 
