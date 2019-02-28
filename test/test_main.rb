@@ -182,6 +182,28 @@ class TestMain < Test::Unit::TestCase
         assert_equal 6, fun.call(3)
         assert_equal 10, fun.call(4)
       end
+
+      test '変数を使用したときの振る舞いを比較1' do
+        x = 1
+        $stdout = StringIO.new
+        func = Proc.new {|x| p x}
+        func.call(3)
+        p x
+        
+        output = $stdout.string
+        assert_equal "3\n" + "1\n", output
+      end
+
+      test '変数を使用したときの振る舞いを比較2' do
+        x = 1
+        $stdout = StringIO.new
+        func = Proc.new {|y|x=y; p x}
+        func.call(3)
+        p x
+        
+        output = $stdout.string
+        assert_equal "3\n" + "3\n", output
+      end
     end
   end
 end
