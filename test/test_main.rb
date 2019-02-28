@@ -14,6 +14,10 @@ class TestMain < Test::Unit::TestCase
   test 'iterator_not_using' do
     assert_equal [2, 4, 6, 8], iterator_not_using
   end
+
+  test 'iterator_using' do
+    assert_equal [2, 4, 6, 8], iterator_using_select
+  end
 end
 
 def total_structured
@@ -41,4 +45,8 @@ def iterator_not_using
     end
   end
   result
+end
+
+def iterator_using_select
+  [1, 2, 3, 4, 5, 6, 7, 8, 9].select { |i| i%2 == 0 }
 end
